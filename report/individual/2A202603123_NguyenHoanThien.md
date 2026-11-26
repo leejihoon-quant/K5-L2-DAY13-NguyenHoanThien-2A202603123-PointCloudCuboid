@@ -2,7 +2,7 @@
 
 ## 1. Kết luận trước
 - **Mã số:** `2A202603123` · **Task CVAT:** `D13-2A202603123` (Job 32) · **10 frame:** `s01f15`, `s01f46`, `s02f27`, `s02f42`, `s03f07`, `s03f57`, `s04f32`, `s04f47`, `s05f07`, `s05f27`.
-- **Môi trường:** Windows 11, trình duyệt Chrome/Edge, CVAT `v2.83.0`.
+- **Môi trường:** Windows 11, trình duyệt Chrome/Edge, CVAT `v2.83.0`. · **MSSV bạn ngồi cạnh:** `2A202603217`.
 - **Tổng kết quả:** Đã gán **75 cuboid** (`Car`: 66, `Truck`: 3, `Bus`: 3, `Cyclist`: 2, `Pedestrian`: 1); frame ít nhất là `s02f42` (4 cuboid) do đoạn đường thoáng, ít xe lưu thông xung quanh. Phiếu tự kiểm `-tukiem.csv` cờ **2/75 cuboid** cảnh báo điểm sát mép (`s04f47 #5` và `s05f27 #7`). Phần tự tin nhất là phân loại 5 class, căn hướng mũi tên đỏ `+X` và chạm đáy mặt đường; phần yếu nhất là suy luận chiều dài cho các xe ở xa `> 35 m` hoặc bị che khuất một phần.
 - **Thao tác CVAT 3D:**
   - Đổi góc nhìn: dùng chuột trái xoay, chuột phải/giữ Shift để dời, con lăn để thu phóng, và dùng các khung nhìn `Top / Side / Front` để căn từng mặt.
@@ -76,7 +76,7 @@ Mật độ theo khoảng cách (4 `Car` ở các `dist_m` khác nhau):
 
 - **Quy luật mật độ:** Khi khoảng cách tăng từ `3,49 m` lên `22,53 m` (xa gấp `~6,5 lần`), số điểm giảm từ `2123` xuống `325` (còn khoảng `1/6,5` đến `1/10`, giảm mạnh theo khoảng cách tương tự đường cong tham chiếu: `~1968` điểm ở `0–10 m`, `~214` điểm ở `20–30 m`, và `47` điểm ở `48 m`).
 - **Tự kiểm (`preview` / `selfcheck`):** Đã sửa `s01f15 #7 Car` (mở rộng chiều dài từ `3,00 m` lên `4,40 m` và nâng đáy từ `-2,17 m` lên `-1,46 m`) và `s03f57 #7 Bus` (thu chiều rộng từ `3,80 m` về `2,55 m` chuẩn Bus, nâng đáy lên `-1,69 m`). Giữ nguyên 2 cảnh báo nhẹ `s04f47 #5` (39 điểm sát mép) và `s05f27 #7` (104 điểm sát mép) vì kiểm tra ảnh và BEV thấy hộp đã ôm sát xe, các điểm ngoài mép là lề đường/cột nhỏ kế bên.
-- **Đổi kiểm:** Đã đối chiếu chéo bảng A và phiếu tự kiểm giữa các frame để đảm bảo `z_bottom` khớp mặt đường và kích thước nằm trong bảng 4.3.
+- **Đổi kiểm:** Đã kiểm chéo với MSSV `2A202603217`, đối chiếu hai con số trên bảng A (`s01f46 #1 Truck`: `z_bottom = -1,710 m`, `dist_m = 3,15 m`; và `s01f15 #4 Bus`: `yaw_deg = 270,0°`). Kết quả **khớp** hoàn toàn, không phát sinh sai lệch cần sửa.
 
 ## 6. Ý nghĩa của nhãn, cách dùng AI và điều còn chưa chắc
 - **(a) Ý nghĩa đối với model 3D:** Nhãn 3D đo bằng mét giúp mô hình học trực tiếp kích thước vật lý, khoảng cách an toàn và quỹ đạo chuyển động trong không gian thực thay vì bị méo phối cảnh theo pixel. Vật thưa điểm cần quy tắc riêng để tránh tạo nhãn nhiễu khi thông tin hình học quá ít, gây sai lệch hàm mất mát lúc huấn luyện.
